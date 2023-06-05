@@ -6,12 +6,54 @@
 
     <groupId>net.wenzuo</groupId>
     <artifactId>mono</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Mono</name>
+    <description>基于SpringBoot和SpringCloud的企业级常用组件封装库</description>
+    <url>https://github.com/catch6/mono</url>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/catch6/mono</url>
+        <connection>https://github.com/catch6/mono.git</connection>
+        <developerConnection>https://github.com/catch6</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>Catch</id>
+            <name>Catch</name>
+            <email>catchlife6@163.com</email>
+            <url>https://github.com/catch6</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
 </project>
