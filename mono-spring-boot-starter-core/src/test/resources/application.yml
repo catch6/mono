@@ -1,0 +1,5 @@
+mono:
+  core:
+    enabled: true
+    async: true
+    json: true

@@ -1,0 +1,320 @@
+package net.wenzuo.mono.core.utils;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+
+/**
+ * Json 处理工具类
+ *
+ * @author Catch
+ * @since 2021-06-29
+ */
+@Slf4j
+public class JsonUtils {
+
+    public static ObjectMapper objectMapper = objectMapper();
+
+    private static PropertyNamingStrategy propertyNamingStrategy = PropertyNamingStrategies.LOWER_CAMEL_CASE;
+
+    /**
+     * 更改属性序列化和反序列化命名策略, 默认为 LOWER_CAMEL_CASE
+     * <p>
+     * 如果不使用默认命名策略,需要在项目启动前就设置命名策略.
+     * 如: JsonUtils.setDefaultPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+     */
+    public static void setDefaultPropertyNamingStrategy(PropertyNamingStrategy strategy) {
+        propertyNamingStrategy = strategy;
+        objectMapper = objectMapper();
+    }
+
+    /**
+     * 将 Java 对象转为 Json 字符串
+     *
+     * @param <T>    泛型
+     * @param object Java 对象
+     * @return json 字符串
+     */
+    public static <T> String toString(T object) {
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
+        }
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Bean 对象
+     *
+     * @param <T>   泛型
+     * @param json  json 字符串
+     * @param clazz 要转换的 java 类型
+     * @return 接收 java 对象
+     */
+    public static <T> T toBean(String json, Class<T> clazz) {
+        try {
+            return (json == null || json.isEmpty()) ? null : objectMapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串输入流转为 Bean 对象
+     *
+     * @param <T>         泛型
+     * @param inputStream json 字符串输入流
+     * @param clazz       要转换的 java 类型
+     * @return 接收 java 对象
+     */
+    public static <T> T toBean(InputStream inputStream, Class<T> clazz) {
+        try {
+            return (inputStream == null) ? null : objectMapper.readValue(inputStream, clazz);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Bean 对象
+     *
+     * @param <T>  泛型
+     * @param json json 字符串
+     * @param type 要转换的 java 类型
+     * @return 接收 java 对象
+     */
+    public static <T> T toBean(String json, Type type) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructType(type);
+        try {
+            return objectMapper.readValue(json, javaType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串输入流转为 Bean 对象
+     *
+     * @param <T>         泛型
+     * @param inputStream json 字符串输入流
+     * @param type        要转换的 java 类型
+     * @return 接收 java 对象
+     */
+    public static <T> T toBean(InputStream inputStream, Type type) {
+        if (inputStream == null) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructType(type);
+        try {
+            return objectMapper.readValue(inputStream, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Bean 对象
+     *
+     * @param json             json 字符串
+     * @param parametrized     泛型包装类
+     * @param parameterClasses 泛型类
+     * @param <T>              泛型包装类
+     * @return 泛型包装类
+     */
+    public static <T> T toBean(String json, Class<?> parametrized, Class<?>... parameterClasses) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
+        try {
+            return objectMapper.readValue(json, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串输入流转为 Bean 对象
+     *
+     * @param inputStream      json 字符串输入流
+     * @param parametrized     泛型包装类
+     * @param parameterClasses 泛型类
+     * @param <T>              泛型包装类
+     * @return 泛型包装类
+     */
+    public static <T> T toBean(InputStream inputStream, Class<?> parametrized, Class<?>... parameterClasses) {
+        if (inputStream == null) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
+        try {
+            return objectMapper.readValue(inputStream, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 List
+     *
+     * @param <T>  泛型
+     * @param json json 字符串
+     * @return 接收 java 对象
+     */
+    public static <T> List<T> toList(String json, Class<T> clazz) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
+        try {
+            return objectMapper.readValue(json, collectionType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Map
+     *
+     * @param json   json 字符串
+     * @param kClass map的key类型
+     * @param vClass map的value类型
+     * @param <K>    map的key
+     * @param <V>    map的value
+     * @return map
+     */
+    public static <K, V> Map<K, V> toMap(String json, Class<K> kClass, Class<V> vClass) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        MapType mapType = objectMapper.getTypeFactory().constructMapType(Map.class, kClass, vClass);
+        try {
+            return objectMapper().readValue(json, mapType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T nativeRead(String json, TypeReference<T> type) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(json, type);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 获取 ObjectMapper
+     *
+     * @return ObjectMapper
+     */
+    public static ObjectMapper objectMapper() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        customize().customize(builder);
+        ObjectMapper objectMapper = new ObjectMapper();
+        builder.configure(objectMapper);
+        return objectMapper;
+    }
+
+    public static Jackson2ObjectMapperBuilderCustomizer customize() {
+        // ==================== 日期时间的处理 ====================
+        String dateFormat = "yyyy-MM-dd";
+        String timeFormat = "HH:mm:ss";
+        String datetimeFormat = "yyyy-MM-dd HH:mm:ss";
+        String timeZone = "GMT+8";
+
+        // JDK util 包下的 Date java.util.date
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datetimeFormat);
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(datetimeFormat);
+
+        LocalDateSerializer localDateSerializer = new LocalDateSerializer(dateFormatter);
+        LocalDateDeserializer localDateDeserializer = new LocalDateDeserializer(dateFormatter);
+
+        LocalTimeSerializer localTimeSerializer = new LocalTimeSerializer(timeFormatter);
+        LocalTimeDeserializer localTimeDeserializer = new LocalTimeDeserializer(timeFormatter);
+
+        LocalDateTimeSerializer localDateTimeSerializer = new LocalDateTimeSerializer(dateTimeFormatter);
+        LocalDateTimeDeserializer localDateTimeDeserializer = new LocalDateTimeDeserializer(dateTimeFormatter);
+
+        // 解决Long精度丢失，Long to String
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(LocalDate.class, localDateSerializer)
+                      .addDeserializer(LocalDate.class, localDateDeserializer)
+                      .addSerializer(LocalTime.class, localTimeSerializer)
+                      .addDeserializer(LocalTime.class, localTimeDeserializer)
+                      .addSerializer(LocalDateTime.class, localDateTimeSerializer)
+                      .addDeserializer(LocalDateTime.class, localDateTimeDeserializer);
+
+        Jdk8Module jdk8Module = new Jdk8Module();
+
+        ParameterNamesModule parameterNamesModule = new ParameterNamesModule();
+
+        return builder -> builder.locale(Locale.SIMPLIFIED_CHINESE)
+                                 .timeZone(TimeZone.getTimeZone(timeZone))
+                                 .dateFormat(simpleDateFormat)
+                                 // 属性名策略: 小驼峰
+                                 .propertyNamingStrategy(propertyNamingStrategy)
+                                 // 若对象的属性值为null，序列化时不显示
+                                 .serializationInclusion(JsonInclude.Include.NON_NULL)
+                                 .featuresToEnable()
+                                 .featuresToDisable(
+                                     // 即如果一个类没有public的方法或属性时，会导致序列化失败。关闭后，会得到一个空JSON串。
+                                     SerializationFeature.FAIL_ON_EMPTY_BEANS,
+                                     // 默认开启,即将Date类型序列化为数字时间戳(毫秒表示)。关闭后，按格式化的时间输出,见下面的 datetimeFormat
+                                     SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
+                                     // 若POJO中不含有JSON中的属性，则抛出异常。关闭后，不解析该字段，而不会抛出异常
+                                     DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
+                                 )
+                                 .modules(simpleModule, javaTimeModule, jdk8Module, parameterNamesModule);
+    }
+
+}
