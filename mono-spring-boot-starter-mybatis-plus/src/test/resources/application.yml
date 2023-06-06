@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    username: dev
+    password: dev
+    url: jdbc:mysql://10.0.222.163:3306/mono_dev?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
