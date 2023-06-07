@@ -3,14 +3,16 @@ package net.wenzuo.mono.web.config;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.wenzuo.mono.core.utils.NanoIdUtils;
-import net.wenzuo.mono.web.properties.LoggingProperties;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -33,13 +35,13 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "mono.web.logging.enabled", matchIfMissing = true)
+@Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
+@WebFilter(filterName = "LoggingFilter", urlPatterns = "/*")
 public class LoggingFilter extends OncePerRequestFilter {
 
     private static final ThreadLocal<Long> TIMER = new ThreadLocal<>();
     private static final String REQ_ID = "Req-Id";
-
-    private final LoggingProperties loggingProperties;
 
     @Override
     protected boolean shouldNotFilterAsyncDispatch() {
