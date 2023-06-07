@@ -20,7 +20,7 @@ import org.springframework.context.annotation.PropertySource;
 @ConfigurationPropertiesScan("net.wenzuo.mono.mybatisplus.properties")
 @PropertySource("classpath:application-mybatis-plus.properties")
 @ConditionalOnProperty(value = "mono.mybatis-plus.enabled", matchIfMissing = true)
-public class MonoMybatisPlusAutoConfiguration {
+public class MybatisPlusAutoConfiguration {
 
     @ConditionalOnProperty(value = "mono.mybatis-plus.interceptor", matchIfMissing = true)
     @Bean

@@ -2,6 +2,63 @@
 
 Mono是一个基于SpringBoot和SpringCloud的企业级常用组件封装库，它提供了丰富的功能和强大的扩展性，可以帮助开发者快速构建高效、稳定的应用程序。
 
+## 快速开始
+
+### 引入依赖
+
+```
+<parent>
+    <groupId>net.wenzuo</groupId>
+    <artifactId>mono</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath/>
+</parent>
+...
+<dependency>
+    <groupId>net.wenzuo</groupId>
+    <artifactId>mono-spring-boot-starter-web</artifactId>
+</dependency>
+```
+
+### 配置建议
+
+开发环境
+
+```yaml
+logging:
+  level:
+    your.package.mapper: debug
+```
+
+测试环境
+
+```yaml
+logging:
+  level:
+    your.package.mapper: debug
+mono:
+  web:
+    cors:
+      enabled: false
+```
+
+生产环境
+
+```yaml
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+logging:
+  level:
+    your.package.mapper: debug
+atom:
+  web:
+    cors:
+      enabled: false
+```
+
 ## Core
 
 配置项
@@ -43,3 +100,33 @@ mono:
     update-time-field: updateTime
 ```
 
+## Web
+
+配置项
+
+```yaml
+mono:
+  web:
+    enabled: true
+    controller-advice: true
+    logging:
+      enabled: true
+      max-payload-length: null
+    cors:
+      enabled: true
+      configs:
+        - pattern: /**
+          allow-credentials: true
+          allowed-origins:
+            - *
+          allowed-origin-patterns: [ ]
+          allowed-headers:
+            - *
+          allowed-methods:
+            - OPTIONS
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - PATCH
+```
