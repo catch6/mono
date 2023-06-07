@@ -21,4 +21,9 @@ public class WebProperties {
      */
     private Boolean controllerAdvice = true;
 
+    /**
+     * 是否启用请求响应日志记录
+     */
+    private Boolean logging = true;
+
 }
