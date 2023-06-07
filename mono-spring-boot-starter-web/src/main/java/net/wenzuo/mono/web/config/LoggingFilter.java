@@ -3,7 +3,6 @@ package net.wenzuo.mono.web.config;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +33,9 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "mono.web.logging.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "mono.web.logging", matchIfMissing = true)
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
-@WebFilter(filterName = "LoggingFilter", urlPatterns = "/*")
 public class LoggingFilter extends OncePerRequestFilter {
 
     private static final ThreadLocal<Long> TIMER = new ThreadLocal<>();
@@ -49,13 +47,12 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        boolean isFirstRequest = !isAsyncDispatch(request);
-        if (!isFirstRequest) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
+        return isAsyncDispatch(request);
+    }
 
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         TIMER.set(System.currentTimeMillis());
 
         String reqId = NanoIdUtils.nanoId();
