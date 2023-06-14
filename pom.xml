@@ -52,6 +52,7 @@
         <module>mono-spring-boot-starter-mybatis-plus</module>
         <module>mono-spring-boot-starter-web</module>
         <module>mono-spring-cloud-starter-feign</module>
+        <module>mono-spring-boot-starter-redis</module>
     </modules>
 
     <distributionManagement>
@@ -104,6 +105,11 @@
             </dependency>
             <dependency>
                 <groupId>net.wenzuo</groupId>
+                <artifactId>mono-spring-boot-starter-redis</artifactId>
+                <version>${mono.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.wenzuo</groupId>
                 <artifactId>mono-spring-boot-starter-web</artifactId>
                 <version>${mono.version}</version>
             </dependency>
@@ -112,6 +118,7 @@
                 <artifactId>mono-spring-cloud-starter-feign</artifactId>
                 <version>${mono.version}</version>
             </dependency>
+
 
             <!-- spring cloud 依赖 -->
             <dependency>
