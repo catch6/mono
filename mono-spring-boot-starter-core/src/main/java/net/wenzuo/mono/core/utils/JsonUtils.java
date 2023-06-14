@@ -304,7 +304,7 @@ public class JsonUtils {
                                  // 属性名策略: 小驼峰
                                  .propertyNamingStrategy(propertyNamingStrategy)
                                  // 若对象的属性值为null，序列化时不显示
-                                 .serializationInclusion(JsonInclude.Include.NON_NULL)
+                                 .serializationInclusion(JsonInclude.Include.ALWAYS)
                                  .featuresToEnable()
                                  .featuresToDisable(
                                      // 即如果一个类没有public的方法或属性时，会导致序列化失败。关闭后，会得到一个空JSON串。
