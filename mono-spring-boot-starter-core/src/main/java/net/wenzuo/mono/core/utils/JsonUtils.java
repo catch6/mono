@@ -6,8 +6,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -29,9 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -114,6 +110,48 @@ public class JsonUtils {
     /**
      * 将 Json 字符串转为 Bean 对象
      *
+     * @param json    json 字符串
+     * @param wrapper 泛型包装类
+     * @param inners  泛型类
+     * @param <T>     泛型包装类
+     * @return 泛型包装类
+     */
+    public static <T> T toBean(String json, Class<?> wrapper, Class<?>... inners) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(wrapper, inners);
+        try {
+            return objectMapper.readValue(json, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串输入流转为 Bean 对象
+     *
+     * @param inputStream json 字符串输入流
+     * @param wrapper     泛型包装类
+     * @param inners      泛型类
+     * @param <T>         泛型包装类
+     * @return 泛型包装类
+     */
+    public static <T> T toBean(InputStream inputStream, Class<?> wrapper, Class<?>... inners) {
+        if (inputStream == null) {
+            return null;
+        }
+        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(wrapper, inners);
+        try {
+            return objectMapper.readValue(inputStream, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Bean 对象
+     *
      * @param <T>  泛型
      * @param json json 字符串
      * @param type 要转换的 java 类型
@@ -154,20 +192,18 @@ public class JsonUtils {
     /**
      * 将 Json 字符串转为 Bean 对象
      *
-     * @param json             json 字符串
-     * @param parametrized     泛型包装类
-     * @param parameterClasses 泛型类
-     * @param <T>              泛型包装类
-     * @return 泛型包装类
+     * @param <T>  泛型
+     * @param json json 字符串
+     * @param type 要转换的 java 类型
+     * @return 接收 java 对象
      */
-    public static <T> T toBean(String json, Class<?> parametrized, Class<?>... parameterClasses) {
+    public static <T> T toBean(String json, TypeReference<T> type) {
         if (json == null || json.isEmpty()) {
             return null;
         }
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
         try {
-            return objectMapper.readValue(json, javaType);
-        } catch (IOException e) {
+            return objectMapper.readValue(json, type);
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -175,72 +211,18 @@ public class JsonUtils {
     /**
      * 将 Json 字符串输入流转为 Bean 对象
      *
-     * @param inputStream      json 字符串输入流
-     * @param parametrized     泛型包装类
-     * @param parameterClasses 泛型类
-     * @param <T>              泛型包装类
-     * @return 泛型包装类
+     * @param <T>         泛型
+     * @param inputStream json 字符串输入流
+     * @param type        要转换的 java 类型
+     * @return 接收 java 对象
      */
-    public static <T> T toBean(InputStream inputStream, Class<?> parametrized, Class<?>... parameterClasses) {
+    public static <T> T toBean(InputStream inputStream, TypeReference<T> type) {
         if (inputStream == null) {
             return null;
         }
-        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
         try {
-            return objectMapper.readValue(inputStream, javaType);
+            return objectMapper.readValue(inputStream, type);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * 将 Json 字符串转为 List
-     *
-     * @param <T>  泛型
-     * @param json json 字符串
-     * @return 接收 java 对象
-     */
-    public static <T> List<T> toList(String json, Class<T> clazz) {
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
-        CollectionType collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
-        try {
-            return objectMapper.readValue(json, collectionType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * 将 Json 字符串转为 Map
-     *
-     * @param json   json 字符串
-     * @param kClass map的key类型
-     * @param vClass map的value类型
-     * @param <K>    map的key
-     * @param <V>    map的value
-     * @return map
-     */
-    public static <K, V> Map<K, V> toMap(String json, Class<K> kClass, Class<V> vClass) {
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
-        MapType mapType = objectMapper.getTypeFactory().constructMapType(Map.class, kClass, vClass);
-        try {
-            return objectMapper().readValue(json, mapType);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static <T> T nativeRead(String json, TypeReference<T> type) {
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
-        try {
-            return objectMapper.readValue(json, type);
-        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
