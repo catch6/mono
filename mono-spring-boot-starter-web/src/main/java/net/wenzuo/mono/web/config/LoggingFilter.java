@@ -115,8 +115,10 @@ public class LoggingFilter extends OncePerRequestFilter {
         // msg.append(", headers=").append(headers);
 
         if (isReadable(wrapper)) {
-            ServletInputStream is = wrapper.getInputStream();
-            String payload = StreamUtils.copyToString(is, StandardCharsets.UTF_8);
+            String payload;
+            try (ServletInputStream inputStream = wrapper.getInputStream()) {
+                payload = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+            }
 
             if (payload.length() == 0) {
                 Map<String, String[]> form = wrapper.getParameterMap();
@@ -142,7 +144,7 @@ public class LoggingFilter extends OncePerRequestFilter {
                 payload = param.toString();
             }
             if (payload.length() > 0) {
-                msg.append(" ").append(payload);
+                msg.append(' ').append(payload);
             }
         }
 
@@ -153,16 +155,24 @@ public class LoggingFilter extends OncePerRequestFilter {
         StringBuilder msg = new StringBuilder();
         long time = System.currentTimeMillis() - TIMER.get();
         msg.append("RESPONSE: ").append(time).append("ms");
-        msg.append(" ").append(wrapper.getStatus());
+        msg.append(' ').append(wrapper.getStatus());
 
         if (isReadable(wrapper)) {
-            InputStream is = wrapper.getContentInputStream();
-            String payload = StreamUtils.copyToString(is, StandardCharsets.UTF_8);
-            wrapper.copyBodyToResponse();
+            String payload;
+            // byte[] byteArray = wrapper.getContentAsByteArray();
+            // wrapper.copyBodyToResponse();
+            // if (byteArray.length > 0) {
+            //     payload = new String(byteArray, StandardCharsets.UTF_8);
+            // }
+
+            try (InputStream is = wrapper.getContentInputStream()) {
+                payload = StreamUtils.copyToString(is, StandardCharsets.UTF_8);
+            }
             if (payload.length() > 0) {
-                msg.append(" ").append(payload);
+                msg.append(' ').append(payload);
             }
         }
+        wrapper.copyBodyToResponse();
 
         log.info(msg.toString());
     }
@@ -180,9 +190,11 @@ public class LoggingFilter extends OncePerRequestFilter {
         if (contentType == null) {
             return false;
         }
-        return contentType.contains(MediaType.APPLICATION_JSON_VALUE) ||
-            contentType.contains(MediaType.APPLICATION_XML_VALUE) ||
-            contentType.contains(MediaType.TEXT_PLAIN_VALUE);
+        return contentType.contains(MediaType.APPLICATION_JSON_VALUE)
+            || contentType.contains(MediaType.APPLICATION_XML_VALUE)
+            || contentType.contains(MediaType.TEXT_PLAIN_VALUE)
+            || contentType.contains(MediaType.TEXT_HTML_VALUE)
+            || contentType.contains(MediaType.TEXT_XML_VALUE);
     }
 
 }

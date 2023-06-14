@@ -26,9 +26,9 @@ import java.util.Set;
  * @since 2023-06-06
  */
 @Slf4j
-@ConditionalOnProperty(value = "mono.web.controller-advice", matchIfMissing = true)
+@ConditionalOnProperty(value = "mono.web.exception-handler", matchIfMissing = true)
 @RestControllerAdvice
-public class WebControllerAdvice {
+public class WebExceptionAdvice {
 
     /**
      * Http异常错误处理

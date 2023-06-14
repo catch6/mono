@@ -19,7 +19,7 @@ public class WebProperties {
     /**
      * 是否启用全局异常处理
      */
-    private Boolean controllerAdvice = true;
+    private Boolean exceptionHandler = true;
 
     /**
      * 是否启用请求响应日志记录
