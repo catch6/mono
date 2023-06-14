@@ -51,6 +51,7 @@
         <module>mono-spring-boot-starter-jwt</module>
         <module>mono-spring-boot-starter-mybatis-plus</module>
         <module>mono-spring-boot-starter-web</module>
+        <module>mono-spring-cloud-starter-feign</module>
     </modules>
 
     <distributionManagement>
@@ -104,6 +105,11 @@
             <dependency>
                 <groupId>net.wenzuo</groupId>
                 <artifactId>mono-spring-boot-starter-web</artifactId>
+                <version>${mono.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.wenzuo</groupId>
+                <artifactId>mono-spring-cloud-starter-feign</artifactId>
                 <version>${mono.version}</version>
             </dependency>
 
@@ -229,6 +235,15 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin.version}</version>
+                <inherited>false</inherited>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
             </plugin>
         </plugins>
     </build>

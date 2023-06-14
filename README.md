@@ -13,7 +13,9 @@ Mono是一个基于SpringBoot和SpringCloud的企业级常用组件封装库，�
     <version>1.0.0-SNAPSHOT</version>
     <relativePath/>
 </parent>
+
 ...
+
 <dependency>
     <groupId>net.wenzuo</groupId>
     <artifactId>mono-spring-boot-starter-web</artifactId>
@@ -53,7 +55,7 @@ springdoc:
 logging:
   level:
     your.package.mapper: debug
-atom:
+mono:
   web:
     cors:
       enabled: false
