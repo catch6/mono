@@ -76,14 +76,35 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串转为 Bean 对象
+     * 将 Java 对象转为格式化的 Json 字符串
+     *
+     * @param <T>    泛型
+     * @param object Java 对象
+     * @return json 字符串
+     */
+    public static <T> String toPrettyString(T object) {
+        if (object == null) {
+            return null;
+        }
+        if (object instanceof String) {
+            return (String) object;
+        }
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 将 Json 字符串转为 Object 对象
      *
      * @param <T>   泛型
      * @param json  json 字符串
      * @param clazz 要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(String json, Class<T> clazz) {
+    public static <T> T toObject(String json, Class<T> clazz) {
         try {
             return (json == null || json.isEmpty()) ? null : objectMapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
@@ -92,14 +113,14 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串输入流转为 Bean 对象
+     * 将 Json 字符串输入流转为 Object 对象
      *
      * @param <T>         泛型
      * @param inputStream json 字符串输入流
      * @param clazz       要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(InputStream inputStream, Class<T> clazz) {
+    public static <T> T toObject(InputStream inputStream, Class<T> clazz) {
         try {
             return (inputStream == null) ? null : objectMapper.readValue(inputStream, clazz);
         } catch (IOException e) {
@@ -108,7 +129,7 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串转为 Bean 对象
+     * 将 Json 字符串转为 Object 对象
      *
      * @param json    json 字符串
      * @param wrapper 泛型包装类
@@ -116,7 +137,7 @@ public class JsonUtils {
      * @param <T>     泛型包装类
      * @return 泛型包装类
      */
-    public static <T> T toBean(String json, Class<?> wrapper, Class<?>... inners) {
+    public static <T> T toObject(String json, Class<?> wrapper, Class<?>... inners) {
         if (json == null || json.isEmpty()) {
             return null;
         }
@@ -129,7 +150,7 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串输入流转为 Bean 对象
+     * 将 Json 字符串输入流转为 Object 对象
      *
      * @param inputStream json 字符串输入流
      * @param wrapper     泛型包装类
@@ -137,7 +158,7 @@ public class JsonUtils {
      * @param <T>         泛型包装类
      * @return 泛型包装类
      */
-    public static <T> T toBean(InputStream inputStream, Class<?> wrapper, Class<?>... inners) {
+    public static <T> T toObject(InputStream inputStream, Class<?> wrapper, Class<?>... inners) {
         if (inputStream == null) {
             return null;
         }
@@ -150,14 +171,14 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串转为 Bean 对象
+     * 将 Json 字符串转为 Object 对象
      *
      * @param <T>  泛型
      * @param json json 字符串
      * @param type 要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(String json, Type type) {
+    public static <T> T toObject(String json, Type type) {
         if (json == null || json.isEmpty()) {
             return null;
         }
@@ -170,14 +191,14 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串输入流转为 Bean 对象
+     * 将 Json 字符串输入流转为 Object 对象
      *
      * @param <T>         泛型
      * @param inputStream json 字符串输入流
      * @param type        要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(InputStream inputStream, Type type) {
+    public static <T> T toObject(InputStream inputStream, Type type) {
         if (inputStream == null) {
             return null;
         }
@@ -190,14 +211,14 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串转为 Bean 对象
+     * 将 Json 字符串转为 Object 对象
      *
      * @param <T>  泛型
      * @param json json 字符串
      * @param type 要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(String json, TypeReference<T> type) {
+    public static <T> T toObject(String json, TypeReference<T> type) {
         if (json == null || json.isEmpty()) {
             return null;
         }
@@ -209,14 +230,14 @@ public class JsonUtils {
     }
 
     /**
-     * 将 Json 字符串输入流转为 Bean 对象
+     * 将 Json 字符串输入流转为 Object 对象
      *
      * @param <T>         泛型
      * @param inputStream json 字符串输入流
      * @param type        要转换的 java 类型
      * @return 接收 java 对象
      */
-    public static <T> T toBean(InputStream inputStream, TypeReference<T> type) {
+    public static <T> T toObject(InputStream inputStream, TypeReference<T> type) {
         if (inputStream == null) {
             return null;
         }

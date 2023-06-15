@@ -30,7 +30,7 @@ class JsonUtilsTest {
     }
 
     @Test
-    void toBean() {
+    void toObject() {
         List<VO> list = new ArrayList<>();
         VO vo1 = new VO();
         vo1.setDateTime(LocalDateTime.now());
@@ -43,10 +43,20 @@ class JsonUtilsTest {
         vo2.setTime(LocalTime.now());
         list.add(vo2);
         String jsonString = JsonUtils.toString(list);
-        List<VO> vos = JsonUtils.toBean(jsonString, List.class, VO.class);
-        Set<VO> voSet = JsonUtils.toBean(jsonString, Set.class, VO.class);
+        List<VO> vos = JsonUtils.toObject(jsonString, List.class, VO.class);
+        Set<VO> voSet = JsonUtils.toObject(jsonString, Set.class, VO.class);
         log.info("vos: {}", vos);
         log.info("voSet: {}", voSet);
+    }
+
+    @Test
+    void toPrettyString() {
+        VO vo = new VO();
+        vo.setDateTime(LocalDateTime.now());
+        vo.setDate(LocalDate.now());
+        vo.setTime(LocalTime.now());
+        String result = JsonUtils.toPrettyString(vo);
+        log.info("result: {}", result);
     }
 
     @Data
