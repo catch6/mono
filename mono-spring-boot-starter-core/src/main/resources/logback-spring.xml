@@ -6,7 +6,7 @@
     <springProperty scop="context" name="spring.application.name" source="spring.application.name"
                     defaultValue="application"/>
 
-    <property name="LOG_PATH" value="${LOG_PATH:-${user.home}/logs}/${spring.application.name:-application}"/>
+    <property name="LOG_PATH" value="${LOG_PATH:-${user.dir}/logs}"/>
 
     <property name="APP_LOG_FILE" value="${LOG_PATH}/app.log"/>
     <property name="ERROR_LOG_FILE" value="${LOG_PATH}/error.log"/>
