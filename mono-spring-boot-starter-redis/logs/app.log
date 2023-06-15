@@ -1,0 +1,10 @@
+2023-06-15 15:45:34.187 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : Starting RedisServiceTest using Java 17.0.5 with PID 2534 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-redis)
+2023-06-15 15:45:34.188 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : No active profile set, falling back to 1 default profile: "default"
+2023-06-15 15:45:34.378 [               ]  INFO [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-15 15:45:34.380 [               ]  INFO [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-15 15:45:34.393 [               ]  INFO [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-15 15:45:34.764 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : Started RedisServiceTest in 0.76 seconds (process running for 1.135)
+2023-06-15 15:45:35.231 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : item:RedisServiceTest.Item(name=test, age=1)
+2023-06-15 15:45:35.231 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : item:RedisServiceTest.Item(name=test, age=2)
+2023-06-15 15:45:35.246 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : key:item2,value:RedisServiceTest.Item(name=test, age=2)
+2023-06-15 15:45:35.246 [               ]  INFO [           main] n.w.m.t.redis.service.RedisServiceTest   : key:item1,value:RedisServiceTest.Item(name=test, age=1)

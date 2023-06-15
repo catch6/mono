@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.7</version>
+        <version>3.0.2</version>
         <relativePath/>
     </parent>
 
@@ -71,8 +71,8 @@
 
         <mono.version>1.0.0-SNAPSHOT</mono.version>
 
-        <spring-boot.version>3.0.7</spring-boot.version>
-        <spring-cloud-dependencies.version>2022.0.3</spring-cloud-dependencies.version>
+        <spring-boot.version>3.0.2</spring-boot.version>
+        <spring-cloud-dependencies.version>2022.0.0</spring-cloud-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2022.0.0.0-RC2</spring-cloud-alibaba-dependencies.version>
 
         <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
@@ -229,6 +229,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <additionalOptions>
                         <additionalOption>-Xdoclint:none</additionalOption>

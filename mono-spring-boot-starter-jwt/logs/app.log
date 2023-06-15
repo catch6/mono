@@ -1,0 +1,6 @@
+2023-06-15 15:45:27.733 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : Starting JwtServiceTest using Java 17.0.5 with PID 2502 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-jwt)
+2023-06-15 15:45:27.734 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : No active profile set, falling back to 1 default profile: "default"
+2023-06-15 15:45:28.093 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : Started JwtServiceTest in 0.594 seconds (process running for 1.063)
+2023-06-15 15:45:28.317 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : signed: eyJhbGciOiJIUzI1NiJ9.dGVzdA.KT9XYVAupXPyQ03bT8DsLaS59HGq1M8M4iSYj5fhP78
+2023-06-15 15:45:28.324 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : signed: eyJhbGciOiJIUzI1NiJ9.dGVzdA.KT9XYVAupXPyQ03bT8DsLaS59HGq1M8M4iSYj5fhP78
+2023-06-15 15:45:28.327 [               ]  INFO [           main] n.w.m.test.jwt.service.JwtServiceTest    : parsed: test
