@@ -26,4 +26,9 @@ public class RedisProperties {
      */
     private Boolean cacheManager = true;
 
+    /**
+     * 是否启用 RedisService
+     */
+    private Boolean redisService = true;
+
 }

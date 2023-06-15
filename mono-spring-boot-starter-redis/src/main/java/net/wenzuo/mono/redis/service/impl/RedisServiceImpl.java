@@ -1,65 +1,79 @@
-package net.wenzuo.mono.redis.manager;
+package net.wenzuo.mono.redis.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.wenzuo.mono.core.utils.JsonUtils;
+import net.wenzuo.mono.redis.service.RedisService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Catch
- * @since 2023-06-14
+ * @since 2023-06-15
  */
 @Slf4j
 @RequiredArgsConstructor
-@Component
-public class RedisManager {
+@ConditionalOnProperty(value = "mono.redis.redis-service", matchIfMissing = true)
+@Service
+public class RedisServiceImpl implements RedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    public void set(String key, Object value, long timeout, TimeUnit timeUnit) {
-        stringRedisTemplate.opsForValue().set(key, JsonUtils.toString(value), timeout, timeUnit);
+    @Override
+    public void set(String key, Object value, Duration duration) {
+        stringRedisTemplate.opsForValue().set(key, JsonUtils.toString(value), duration);
     }
 
+    @Override
     public void set(String key, Object value) {
         stringRedisTemplate.opsForValue().set(key, JsonUtils.toString(value));
     }
 
+    @Override
     public <T> T get(String key, Class<T> clazz) {
-        return JsonUtils.toBean(stringRedisTemplate.opsForValue().get(key), clazz);
+        return JsonUtils.toObject(stringRedisTemplate.opsForValue().get(key), clazz);
     }
 
+    @Override
     public <T> T get(String key, Class<?> wrapper, Class<?>... inners) {
-        return JsonUtils.toBean(stringRedisTemplate.opsForValue().get(key), wrapper, inners);
+        return JsonUtils.toObject(stringRedisTemplate.opsForValue().get(key), wrapper, inners);
     }
 
+    @Override
     public Boolean del(String key) {
         return stringRedisTemplate.delete(key);
     }
 
+    @Override
     public Long del(Collection<String> keys) {
         return stringRedisTemplate.delete(keys);
     }
 
-    public Boolean expire(String key, long timeout, TimeUnit timeUnit) {
-        return stringRedisTemplate.expire(key, timeout, timeUnit);
+    @Override
+    public Boolean expire(String key, Duration duration) {
+        return stringRedisTemplate.expire(key, duration);
     }
 
+    @Override
     public Long getExpire(String key) {
         return stringRedisTemplate.getExpire(key);
     }
 
+    @Override
     public Boolean hasKey(String key) {
         return stringRedisTemplate.hasKey(key);
     }
 
+    @Override
     public Long incr(String key, long delta) {
         return stringRedisTemplate.opsForValue().increment(key, delta);
     }
 
+    @Override
     public Long decr(String key, long delta) {
         return stringRedisTemplate.opsForValue().decrement(key, delta);
     }
