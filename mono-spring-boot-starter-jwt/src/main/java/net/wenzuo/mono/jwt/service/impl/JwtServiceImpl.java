@@ -49,7 +49,7 @@ public class JwtServiceImpl implements JwtService {
             if (clazz == String.class) {
                 return (T) jwsObject.getPayload().toString();
             }
-            return JsonUtils.toBean(jwsObject.getPayload().toString(), clazz);
+            return JsonUtils.toObject(jwsObject.getPayload().toString(), clazz);
         } catch (ParseException | JOSEException e) {
             throw new RuntimeException(e);
         }
