@@ -25,12 +25,12 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void set(String key, Object value, Duration duration) {
-        stringRedisTemplate.opsForValue().set(key, JsonUtils.toString(value), duration);
+        stringRedisTemplate.opsForValue().set(key, JsonUtils.toJson(value), duration);
     }
 
     @Override
     public void set(String key, Object value) {
-        stringRedisTemplate.opsForValue().set(key, JsonUtils.toString(value));
+        stringRedisTemplate.opsForValue().set(key, JsonUtils.toJson(value));
     }
 
     @Override

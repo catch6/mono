@@ -61,7 +61,7 @@ public class JsonUtils {
      * @param object Java 对象
      * @return json 字符串
      */
-    public static <T> String toString(T object) {
+    public static <T> String toJson(T object) {
         if (object == null) {
             return null;
         }
@@ -82,7 +82,7 @@ public class JsonUtils {
      * @param object Java 对象
      * @return json 字符串
      */
-    public static <T> String toPrettyString(T object) {
+    public static <T> String toPrettyJson(T object) {
         if (object == null) {
             return null;
         }

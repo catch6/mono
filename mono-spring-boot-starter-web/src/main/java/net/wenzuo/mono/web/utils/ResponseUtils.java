@@ -28,7 +28,7 @@ public class ResponseUtils {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(TYPE_JSON);
         try (PrintWriter writer = response.getWriter()) {
-            String json = JsonUtils.toString(object);
+            String json = JsonUtils.toJson(object);
             response.setContentLength(json.length());
             writer.print(json);
         }

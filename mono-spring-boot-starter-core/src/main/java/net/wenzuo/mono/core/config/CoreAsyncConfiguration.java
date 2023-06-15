@@ -64,7 +64,7 @@ public class CoreAsyncConfiguration implements AsyncConfigurer, AsyncUncaughtExc
     public void handleUncaughtException(Throwable t, Method method, @NonNull Object... params) {
         String message = "async exception: " + t.getMessage() +
             ", method: " + method.getName() +
-            ", params: " + JsonUtils.toString(params);
+            ", params: " + JsonUtils.toJson(params);
         log.error(message, t);
     }
 

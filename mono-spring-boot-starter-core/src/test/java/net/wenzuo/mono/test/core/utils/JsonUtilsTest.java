@@ -20,12 +20,12 @@ import java.util.Set;
 class JsonUtilsTest {
 
     @Test
-    void toStringTest() {
+    void toJson() {
         VO vo = new VO();
         vo.setDateTime(LocalDateTime.now());
         vo.setDate(LocalDate.now());
         vo.setTime(LocalTime.now());
-        String result = JsonUtils.toString(vo);
+        String result = JsonUtils.toJson(vo);
         log.info("result: {}", result);
     }
 
@@ -42,7 +42,7 @@ class JsonUtilsTest {
         vo2.setDate(LocalDate.now());
         vo2.setTime(LocalTime.now());
         list.add(vo2);
-        String jsonString = JsonUtils.toString(list);
+        String jsonString = JsonUtils.toJson(list);
         List<VO> vos = JsonUtils.toObject(jsonString, List.class, VO.class);
         Set<VO> voSet = JsonUtils.toObject(jsonString, Set.class, VO.class);
         log.info("vos: {}", vos);
@@ -50,12 +50,12 @@ class JsonUtilsTest {
     }
 
     @Test
-    void toPrettyString() {
+    void toPrettyJson() {
         VO vo = new VO();
         vo.setDateTime(LocalDateTime.now());
         vo.setDate(LocalDate.now());
         vo.setTime(LocalTime.now());
-        String result = JsonUtils.toPrettyString(vo);
+        String result = JsonUtils.toPrettyJson(vo);
         log.info("result: {}", result);
     }
 

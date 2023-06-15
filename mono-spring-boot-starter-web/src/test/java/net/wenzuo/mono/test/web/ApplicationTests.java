@@ -67,7 +67,7 @@ class ApplicationTests {
         req.setName("你好test");
         mockMvc.perform(MockMvcRequestBuilders.post("/test/post/json")
                                               .contentType(MediaType.APPLICATION_JSON)
-                                              .content(JsonUtils.toString(req)))
+                                              .content(JsonUtils.toJson(req)))
                .andExpect(MockMvcResultMatchers.status().isOk())
                .andDo(MockMvcResultHandlers.print());
     }

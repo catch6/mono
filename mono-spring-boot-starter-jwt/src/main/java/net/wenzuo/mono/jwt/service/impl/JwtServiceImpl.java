@@ -29,7 +29,7 @@ public class JwtServiceImpl implements JwtService {
             throw new RuntimeException("JWSAlgorithm is empty");
         }
         JWSHeader jwsHeader = new JWSHeader(jwsAlgorithm.get());
-        JWSObject jwsObject = new JWSObject(jwsHeader, new Payload(JsonUtils.toString(payload)));
+        JWSObject jwsObject = new JWSObject(jwsHeader, new Payload(JsonUtils.toJson(payload)));
         try {
             jwsObject.sign(jwsSigner);
             return jwsObject.serialize();
