@@ -1,8 +1,0 @@
-2023-06-15 15:45:29.410 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : Starting ApplicationTests using Java 17.0.5 with PID 2512 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-mybatis-plus)
-2023-06-15 15:45:29.411 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2023-06-15 15:45:29.651 [               ]  WARN [           main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[net.wenzuo.mono.test.mybatisplus]' package. Please check your configuration.
-2023-06-15 15:45:30.133 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : Started ApplicationTests in 0.934 seconds (process running for 1.336)
-2023-06-15 15:47:00.645 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : Starting ApplicationTests using Java 17.0.5 with PID 2694 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-mybatis-plus)
-2023-06-15 15:47:00.646 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : No active profile set, falling back to 1 default profile: "default"
-2023-06-15 15:47:00.870 [               ]  WARN [           main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[net.wenzuo.mono.test.mybatisplus]' package. Please check your configuration.
-2023-06-15 15:47:01.153 [               ]  INFO [           main] n.w.m.test.mybatisplus.ApplicationTests  : Started ApplicationTests in 0.697 seconds (process running for 1.106)
