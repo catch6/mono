@@ -20,3 +20,25 @@
 2023-06-15 15:45:32.544 [OMY28cSaio0iQoG]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 16ms 200 {"id":"1","name":"你好test"}
 2023-06-15 15:45:32.548 [kEsgasmwCIkacQu]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: GET /test/get/query?id=1&name=你好test
 2023-06-15 15:45:32.549 [kEsgasmwCIkacQu]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 1ms 200 {"id":"1","name":"你好test"}
+2023-06-15 15:47:04.528 [               ]  INFO [           main] n.wenzuo.mono.test.web.ApplicationTests  : Starting ApplicationTests using Java 17.0.5 with PID 2732 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-web)
+2023-06-15 15:47:04.529 [               ]  INFO [           main] n.wenzuo.mono.test.web.ApplicationTests  : The following 1 profile is active: "dev"
+2023-06-15 15:47:04.677 [               ]  INFO [           main] o.s.c.i.support.PropertySourceProcessor  : Properties location [classpath:application-web-${spring.profiles.active}.properties] not resolvable: class path resource [application-web-dev.properties] cannot be opened because it does not exist
+2023-06-15 15:47:05.437 [               ]  INFO [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-06-15 15:47:05.437 [               ]  INFO [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-06-15 15:47:05.441 [               ]  INFO [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 13 endpoint(s) beneath base path '/actuator'
+2023-06-15 15:47:05.451 [               ]  INFO [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 13 ms
+2023-06-15 15:47:05.475 [               ]  INFO [           main] n.wenzuo.mono.test.web.ApplicationTests  : Started ApplicationTests in 1.147 seconds (process running for 1.57)
+2023-06-15 15:47:05.677 [4KSi0IY8KAeYyEE]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: POST /test/post/x-www-form-urlencoded id=1&name=你好test
+2023-06-15 15:47:05.716 [4KSi0IY8KAeYyEE]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 40ms 200 {"id":"1","name":"你好test"}
+2023-06-15 15:47:05.730 [Ku2EgcwgoI0u8SS]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: POST /test/post/form-data
+2023-06-15 15:47:05.732 [Ku2EgcwgoI0u8SS]  INFO [           main] n.w.m.t.web.controller.TestController    : file: 测试图片.png
+2023-06-15 15:47:05.733 [Ku2EgcwgoI0u8SS]  INFO [           main] n.w.m.t.web.controller.TestController    : file-size: 25427
+2023-06-15 15:47:05.734 [Ku2EgcwgoI0u8SS]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 4ms 200 {"id":null,"name":"你好test"}
+2023-06-15 15:47:05.739 [qQC0YKm_KeSYUk8]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: GET /test/get/file
+2023-06-15 15:47:05.745 [qQC0YKm_KeSYUk8]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 5ms 200
+2023-06-15 15:47:05.753 [cWyEa4Qgow6eUWw]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: GET /test/get
+2023-06-15 15:47:05.755 [cWyEa4Qgow6eUWw]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 2ms 200 你好test
+2023-06-15 15:47:05.766 [I2cG6mg2eMoscS4]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: POST /test/post/json {"id":"1","name":"你好test"}
+2023-06-15 15:47:05.783 [I2cG6mg2eMoscS4]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 17ms 200 {"id":"1","name":"你好test"}
+2023-06-15 15:47:05.786 [Ea_uU6i6gGoQAcW]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : REQUEST: GET /test/get/query?id=1&name=你好test
+2023-06-15 15:47:05.788 [Ea_uU6i6gGoQAcW]  INFO [           main] n.wenzuo.mono.web.config.LoggingFilter   : RESPONSE: 2ms 200 {"id":"1","name":"你好test"}

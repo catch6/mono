@@ -9,3 +9,14 @@
   "date" : "2023-06-15",
   "time" : "15:45:26"
 }
+2023-06-15 15:46:53.638 [               ]  INFO [           main] n.w.mono.test.core.ApplicationTests      : Starting ApplicationTests using Java 17.0.5 with PID 2633 (started by zhanghao in /Users/zhanghao/Projects/IdeaProjects/mono/mono-spring-boot-starter-core)
+2023-06-15 15:46:53.643 [               ]  INFO [           main] n.w.mono.test.core.ApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2023-06-15 15:46:53.957 [               ]  INFO [           main] n.w.mono.test.core.ApplicationTests      : Started ApplicationTests in 0.516 seconds (process running for 0.91)
+2023-06-15 15:46:54.175 [               ]  INFO [           main] n.w.mono.test.core.utils.JsonUtilsTest   : vos: [JsonUtilsTest.VO(dateTime=2023-06-15T15:46:54, date=2023-06-15, time=15:46:54), JsonUtilsTest.VO(dateTime=2023-06-15T15:46:54, date=2023-06-15, time=15:46:54)]
+2023-06-15 15:46:54.175 [               ]  INFO [           main] n.w.mono.test.core.utils.JsonUtilsTest   : voSet: [JsonUtilsTest.VO(dateTime=2023-06-15T15:46:54, date=2023-06-15, time=15:46:54)]
+2023-06-15 15:46:54.176 [               ]  INFO [           main] n.w.mono.test.core.utils.JsonUtilsTest   : result: {"dateTime":"2023-06-15 15:46:54","date":"2023-06-15","time":"15:46:54"}
+2023-06-15 15:46:54.179 [               ]  INFO [           main] n.w.mono.test.core.utils.JsonUtilsTest   : result: {
+  "dateTime" : "2023-06-15 15:46:54",
+  "date" : "2023-06-15",
+  "time" : "15:46:54"
+}
