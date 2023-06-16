@@ -1,9 +1,7 @@
 package net.wenzuo.mono.mybatisplus.config;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.pagination.dialects.MySqlDialect;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -27,8 +25,6 @@ public class MybatisPlusAutoConfiguration {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
-        paginationInnerInterceptor.setDbType(DbType.MYSQL);
-        paginationInnerInterceptor.setDialect(new MySqlDialect());
         interceptor.addInnerInterceptor(paginationInnerInterceptor);
         return interceptor;
     }

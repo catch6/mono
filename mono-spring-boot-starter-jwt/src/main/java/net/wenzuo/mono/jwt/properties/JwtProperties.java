@@ -12,6 +12,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class JwtProperties {
 
     /**
+     * 是否启用 jwt 模块
+     */
+    private Boolean enabled;
+    /**
      * jwt secret
      */
     private String secret;
