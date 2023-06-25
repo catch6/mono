@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Catch
  * @since 2021-06-30
  */
-public class NanoIdUtils {
+public abstract class NanoIdUtils {
 
     private static final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_".toCharArray();
 

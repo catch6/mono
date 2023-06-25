@@ -37,7 +37,7 @@ import java.util.TimeZone;
  * @since 2021-06-29
  */
 @Slf4j
-public class JsonUtils {
+public abstract class JsonUtils {
 
     public static ObjectMapper objectMapper = objectMapper();
 

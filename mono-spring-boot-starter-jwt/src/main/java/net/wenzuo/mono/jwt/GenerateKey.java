@@ -1,6 +1,5 @@
 package net.wenzuo.mono.jwt;
 
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -16,7 +15,6 @@ public class GenerateKey {
         byte[] sharedSecret = new byte[32];
         random.nextBytes(sharedSecret);
         System.out.println(Base64.getEncoder().encodeToString(sharedSecret));
-        System.out.println(Base64.getEncoder().encodeToString("hello".getBytes(StandardCharsets.UTF_8)));
     }
 
 }

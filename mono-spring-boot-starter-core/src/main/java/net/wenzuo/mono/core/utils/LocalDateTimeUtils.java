@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
  * @author Catch
  * @since 2022-11-02
  */
-public class LocalDateTimeUtils {
+public abstract class LocalDateTimeUtils {
 
     public static LocalDateTime now() {
         return LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);

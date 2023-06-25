@@ -14,7 +14,7 @@ public class JwtProperties {
     /**
      * 是否启用 jwt 模块
      */
-    private Boolean enabled;
+    private Boolean enabled = true;
     /**
      * jwt secret
      */

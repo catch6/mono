@@ -4,7 +4,6 @@ import net.wenzuo.mono.core.exception.BadRequestException;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -19,16 +18,28 @@ import java.util.function.Supplier;
  * @author Catch
  * @since 2021-12-25
  */
-public class Should {
+public abstract class Should {
 
-    public static void equals(Object a, Object b, String message) {
+    public static void isEquals(Object a, Object b, String message) {
         if (!Objects.equals(a, b)) {
             throw new BadRequestException(message);
         }
     }
 
-    public static void equals(Object a, Object b, Supplier<String> messageSupplier) {
+    public static void isEquals(Object a, Object b, Supplier<String> messageSupplier) {
         if (!Objects.equals(a, b)) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void notEquals(Object a, Object b, String message) {
+        if (Objects.equals(a, b)) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void notEquals(Object a, Object b, Supplier<String> messageSupplier) {
+        if (Objects.equals(a, b)) {
             throw new BadRequestException(nullSafeGet(messageSupplier));
         }
     }
@@ -41,6 +52,18 @@ public class Should {
 
     public static void isTrue(boolean expression, Supplier<String> messageSupplier) {
         if (!expression) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void isFalse(boolean expression, String message) {
+        if (expression) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void isFalse(boolean expression, Supplier<String> messageSupplier) {
+        if (expression) {
             throw new BadRequestException(nullSafeGet(messageSupplier));
         }
     }
@@ -94,26 +117,38 @@ public class Should {
     }
 
     public static void isBlank(@Nullable String text, String message) {
-        if (!StringUtils.hasText(text)) {
+        if (StringUtils.hasText(text)) {
             throw new BadRequestException(message);
         }
     }
 
     public static void isBlank(@Nullable String text, Supplier<String> messageSupplier) {
+        if (StringUtils.hasText(text)) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void notBlank(@Nullable String text, String message) {
+        if (!StringUtils.hasText(text)) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void notBlank(@Nullable String text, Supplier<String> messageSupplier) {
         if (!StringUtils.hasText(text)) {
             throw new BadRequestException(nullSafeGet(messageSupplier));
         }
     }
 
-    public static void contains(@Nullable String textToSearch, String substring, String message) {
-        if (StringUtils.hasLength(textToSearch) && StringUtils.hasLength(substring) &&
-            !textToSearch.contains(substring)) {
+    public static void isContains(@Nullable String textToSearch, String substring, String message) {
+        if (StringUtils.hasLength(textToSearch) && StringUtils.hasLength(substring)
+            && !textToSearch.contains(substring)) {
             throw new BadRequestException(message);
         }
     }
 
-    public static void contains(@Nullable String textToSearch, String substring,
-                                Supplier<String> messageSupplier) {
+    public static void isContains(@Nullable String textToSearch, String substring,
+                                  Supplier<String> messageSupplier) {
         if (StringUtils.hasLength(textToSearch) && StringUtils.hasLength(substring) &&
             !textToSearch.contains(substring)) {
             throw new BadRequestException(nullSafeGet(messageSupplier));
@@ -135,14 +170,26 @@ public class Should {
         }
     }
 
+    public static void isEmpty(@Nullable Object[] array, String message) {
+        if (array != null && array.length > 0) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void isEmpty(@Nullable Object[] array, Supplier<String> messageSupplier) {
+        if (array != null && array.length > 0) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
+        }
+    }
+
     public static void notEmpty(@Nullable Object[] array, String message) {
-        if (ObjectUtils.isEmpty(array)) {
+        if (array == null || array.length == 0) {
             throw new BadRequestException(message);
         }
     }
 
     public static void notEmpty(@Nullable Object[] array, Supplier<String> messageSupplier) {
-        if (ObjectUtils.isEmpty(array)) {
+        if (array == null || array.length == 0) {
             throw new BadRequestException(nullSafeGet(messageSupplier));
         }
     }
@@ -164,6 +211,19 @@ public class Should {
                     throw new BadRequestException(nullSafeGet(messageSupplier));
                 }
             }
+        }
+    }
+
+    public static void isEmpty(@Nullable Collection<?> collection, String message) {
+        if (!CollectionUtils.isEmpty(collection)) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void isEmpty(@Nullable Collection<?> collection,
+                               Supplier<String> messageSupplier) {
+        if (!CollectionUtils.isEmpty(collection)) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
         }
     }
 
@@ -201,6 +261,18 @@ public class Should {
         }
     }
 
+    public static void isEmpty(@Nullable Map<?, ?> map, String message) {
+        if (!CollectionUtils.isEmpty(map)) {
+            throw new BadRequestException(message);
+        }
+    }
+
+    public static void isEmpty(@Nullable Map<?, ?> map, Supplier<String> messageSupplier) {
+        if (!CollectionUtils.isEmpty(map)) {
+            throw new BadRequestException(nullSafeGet(messageSupplier));
+        }
+    }
+
     public static void notEmpty(@Nullable Map<?, ?> map, String message) {
         if (CollectionUtils.isEmpty(map)) {
             throw new BadRequestException(message);
@@ -222,6 +294,19 @@ public class Should {
     public static void isInstanceOf(@NonNull Class<?> type, @Nullable Object obj,
                                     Supplier<String> messageSupplier) {
         if (!type.isInstance(obj)) {
+            instanceCheckFailed(type, obj, nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void notInstanceOf(@NonNull Class<?> type, @Nullable Object obj, String message) {
+        if (type.isInstance(obj)) {
+            instanceCheckFailed(type, obj, message);
+        }
+    }
+
+    public static void notInstanceOf(@NonNull Class<?> type, @Nullable Object obj,
+                                     Supplier<String> messageSupplier) {
+        if (type.isInstance(obj)) {
             instanceCheckFailed(type, obj, nullSafeGet(messageSupplier));
         }
     }

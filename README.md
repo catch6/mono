@@ -83,6 +83,8 @@ mono:
     secret: xxxxxxxxxxxx
 ```
 
+Jwt 秘钥生成: 运行 `net.wenzuo.mono.jwt.GenerateKey` 会在控制台输出随机生成的秘钥.
+
 ## Mybatis Plus
 
 配置项
@@ -125,10 +127,7 @@ mono:
           allowed-headers:
             - *
           allowed-methods:
-            - OPTIONS
-            - GET
-            - POST
-            - PUT
-            - DELETE
-            - PATCH
+            - *
+          exposed-headers:
+            - *
 ```

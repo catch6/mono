@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
  * @author Catch
  * @since 2022-11-02
  */
-public class LocalTimeUtils {
+public abstract class LocalTimeUtils {
 
     public static LocalTime now() {
         return LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
