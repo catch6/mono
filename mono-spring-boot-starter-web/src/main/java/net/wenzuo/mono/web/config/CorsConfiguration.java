@@ -31,6 +31,7 @@ public class CorsConfiguration {
             corsConfig.setAllowedOriginPatterns(config.getAllowedOriginPatterns());
             corsConfig.setAllowedHeaders(config.getAllowedHeaders());
             corsConfig.setAllowedMethods(config.getAllowedMethods());
+            corsConfig.setExposedHeaders(config.getExposedHeaders());
             source.registerCorsConfiguration(config.getPattern(), corsConfig);
         }
         return new CorsFilter(source);
