@@ -3,7 +3,7 @@ package net.wenzuo.mono.web.params;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Schema(description = "分页响应")
 @Data
-public class PageRes<T> {
+public class PageResponse<T> {
 
     /**
      * 页码
@@ -38,6 +38,6 @@ public class PageRes<T> {
      * 数据
      */
     @Schema(description = "数据", example = "[]")
-    private List<T> items = Collections.emptyList();
+    private List<T> items = new ArrayList<>();
 
 }

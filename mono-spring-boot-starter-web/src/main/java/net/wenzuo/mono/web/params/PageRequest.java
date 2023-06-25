@@ -10,14 +10,14 @@ import lombok.Data;
  */
 @Schema(description = "分页请求")
 @Data
-public class PageReq {
+public class PageRequest {
 
     /**
      * 页码
      */
-    @Schema(description = "页码", example = "1")
+    @Schema(description = "页码", example = "1", defaultValue = "1")
     @Min(value = 1, message = "页码最小为 1")
-    private int page = 1;
+    private int pageNumber = 1;
     /**
      * 每页结果数
      */
