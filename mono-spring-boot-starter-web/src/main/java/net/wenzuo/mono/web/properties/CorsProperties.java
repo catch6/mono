@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +14,8 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = "mono.web.cors")
 public class CorsProperties {
+
+    private static final List<String> ALL_LIST = Collections.singletonList("*");
 
     /**
      * 是否启用 CORS
@@ -39,7 +40,7 @@ public class CorsProperties {
         /**
          * 允许的 Origins, 默认 *, 生产环境建议设置为具体值，可以为多个
          */
-        private List<String> allowedOrigins = Collections.singletonList("*");
+        private List<String> allowedOrigins = ALL_LIST;
 
         /**
          * 允许的 Origins Pattern, 默认 [], 生产环境建议设置为具体值，可以为多个
@@ -49,12 +50,16 @@ public class CorsProperties {
         /**
          * 允许的 Headers, 默认 *, 生产环境建议设置为具体值，可以为多个
          */
-        private List<String> allowedHeaders = Collections.singletonList("*");
+        private List<String> allowedHeaders = ALL_LIST;
 
         /**
-         * 允许的 Methods, 默认 ["GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"], 生产环境建议设置为具体值，可以为多个
+         * 允许的 Methods, 默认 ["*"], 生产环境建议设置为具体值，可以为多个
          */
-        private List<String> allowedMethods = Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH");
+        private List<String> allowedMethods = ALL_LIST;
+        /**
+         * 允许客户端读取的 Headers, 默认 *
+         */
+        private List<String> exposedHeaders = ALL_LIST;
 
     }
 
