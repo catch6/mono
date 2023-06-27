@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
-set -e
 
 # 变量
 action=$1
