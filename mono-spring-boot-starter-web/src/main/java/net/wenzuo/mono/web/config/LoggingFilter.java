@@ -60,7 +60,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 	@Override
 	protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
-		if (isAsyncDispatch(request)) {
+		if (!log.isInfoEnabled()) {
 			return true;
 		}
 		String uri = request.getRequestURI().substring(contextPath.length() + mvcServletPath.length());
@@ -112,11 +112,9 @@ public class LoggingFilter extends OncePerRequestFilter {
 			filterChain.doFilter(requestToUse, responseToUse);
 		}
 		finally {
-			if (!isAsyncStarted(requestToUse)) {
-				loggingResponse(responseToUse);
-				TIMER.remove();
-				MDC.remove(REQ_ID);
-			}
+			loggingResponse(responseToUse);
+			TIMER.remove();
+			MDC.remove(REQ_ID);
 		}
 
 	}
@@ -194,7 +192,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 		if (isReadable(wrapper)) {
 			String payload;
 			// byte[] byteArray = wrapper.getContentAsByteArray();
-			// wrapper.copyBodyToResponse();
 			// if (byteArray.length > 0) {
 			//     payload = new String(byteArray, StandardCharsets.UTF_8);
 			// }
