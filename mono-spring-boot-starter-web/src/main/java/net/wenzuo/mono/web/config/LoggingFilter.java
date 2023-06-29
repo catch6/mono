@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -16,17 +17,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.wenzuo.mono.core.utils.NanoIdUtils;
+import net.wenzuo.mono.web.properties.LoggingProperties;
 import org.slf4j.MDC;
 
 /**
@@ -34,8 +38,7 @@ import org.slf4j.MDC;
  * @since 2023-06-06
  */
 @Slf4j
-@RequiredArgsConstructor
-@ConditionalOnProperty(value = "mono.web.logging", matchIfMissing = true)
+@ConditionalOnProperty(value = "mono.web.logging.enabled", matchIfMissing = true)
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 100)
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
@@ -44,9 +47,39 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 	private static final String REQ_ID = "Req-Id";
 
+	private static final PathMatcher PATH_MATCHER = new AntPathMatcher();
+
+	@Resource
+	private LoggingProperties loggingProperties;
+
+	@Value("${server.servlet.context-path:}")
+	private String contextPath;
+
+	@Value("${spring.mvc.servlet.path:}")
+	private String mvcServletPath;
+
 	@Override
 	protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
-		return isAsyncDispatch(request);
+		if (isAsyncDispatch(request)) {
+			return true;
+		}
+		String uri = request.getRequestURI().substring(contextPath.length() + mvcServletPath.length());
+		for (String path : loggingProperties.getInternalExcludePath()) {
+			if (PATH_MATCHER.match(path, uri)) {
+				return true;
+			}
+		}
+		for (String path : loggingProperties.getExcludePath()) {
+			if (PATH_MATCHER.match(path, uri)) {
+				return true;
+			}
+		}
+		for (String path : loggingProperties.getIncludePath()) {
+			if (PATH_MATCHER.match(path, uri)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

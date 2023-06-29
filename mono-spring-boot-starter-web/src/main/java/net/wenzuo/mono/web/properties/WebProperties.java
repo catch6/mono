@@ -1,7 +1,8 @@
 package net.wenzuo.mono.web.properties;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * @author Catch
@@ -11,19 +12,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "mono.web")
 public class WebProperties {
 
-    /**
-     * 是否启用 web 模块
-     */
-    private Boolean enabled = true;
+	/**
+	 * 是否启用 web 模块
+	 */
+	private Boolean enabled = true;
 
-    /**
-     * 是否启用全局异常处理
-     */
-    private Boolean exceptionHandler = true;
-
-    /**
-     * 是否启用请求响应日志记录
-     */
-    private Boolean logging = true;
+	/**
+	 * 是否启用全局异常处理
+	 */
+	private Boolean exceptionHandler = true;
 
 }
