@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.wenzuo</groupId>
         <artifactId>mono</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>mono-spring-boot-starter-jwt</artifactId>

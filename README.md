@@ -1,6 +1,20 @@
-# Mono
+<h1 align="center">Mono</h1>
 
-[![Security Status](https://www.murphysec.com/platform3/v31/badge/1672853752308850688.svg)](https://www.murphysec.com/console/report/1672853752271101952/1672853752308850688)
+<p align="center">
+	<a target="_blank" href="https://search.maven.org/artifact/net.wenzuo/mono">
+		<img src="https://img.shields.io/maven-central/v/net.wenzuo/mono.svg?label=Maven%20Central" />
+	</a>
+	<a target="_blank" href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">
+		<img src="https://img.shields.io/badge/JDK-17+-blue.svg" />
+	</a>
+</p>
+
+<p align="center">
+    <a target="_blank" href="https://www.murphysec.com/console/report/1672853752271101952/1672853752308850688">
+		<img src="https://www.murphysec.com/platform3/v31/badge/1672853752308850688.svg" />
+	</a>
+</p>
+
 
 Mono是一个基于SpringBoot和SpringCloud的企业级常用组件封装库，它提供了丰富的功能和强大的扩展性，可以帮助开发者快速构建高效、稳定的应用程序。
 
@@ -12,7 +26,7 @@ Mono是一个基于SpringBoot和SpringCloud的企业级常用组件封装库，�
 <parent>
     <groupId>net.wenzuo</groupId>
     <artifactId>mono</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <relativePath/>
 </parent>
 
