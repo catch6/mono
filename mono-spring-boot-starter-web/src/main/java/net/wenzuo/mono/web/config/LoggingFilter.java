@@ -56,14 +56,14 @@ public class LoggingFilter extends OncePerRequestFilter {
 	private String contextPath;
 
 	@Value("${spring.mvc.servlet.path:}")
-	private String mvcServletPath;
+	private String servletPath;
 
 	@Override
 	protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
 		if (!log.isInfoEnabled()) {
 			return true;
 		}
-		String uri = request.getRequestURI().substring(contextPath.length() + mvcServletPath.length());
+		String uri = request.getRequestURI().substring(contextPath.length() + servletPath.length());
 		for (String path : loggingProperties.getInternalExcludePath()) {
 			if (PATH_MATCHER.match(path, uri)) {
 				return true;

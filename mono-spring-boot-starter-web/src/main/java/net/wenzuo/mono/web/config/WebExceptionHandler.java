@@ -29,7 +29,7 @@ import net.wenzuo.mono.core.exception.HttpStatusException;
 @Slf4j
 @ConditionalOnProperty(value = "mono.web.exception-handler", matchIfMissing = true)
 @RestControllerAdvice
-public class WebExceptionAdvice {
+public class WebExceptionHandler {
 
 	/**
 	 * Http异常错误处理
